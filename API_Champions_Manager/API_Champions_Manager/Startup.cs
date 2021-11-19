@@ -1,3 +1,4 @@
+using API_Champions_Manager.Services.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,10 @@ namespace API_Champions_Manager
         {
 
             services.AddControllers();
+
+            // Dependency Injection
+            services.AddScoped<IAwardService, AwardServiceImplementation>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
