@@ -1,0 +1,1 @@
+INSERT INTO tb_award (name, origin, organization, national) VALUES ('Ballon d´Or', 'Europe', 'FIFA', false)

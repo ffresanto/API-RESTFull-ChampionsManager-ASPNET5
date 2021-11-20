@@ -1,8 +1,11 @@
+using API_Champions_Manager.Model.Context;
+using API_Champions_Manager.Services;
 using API_Champions_Manager.Services.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +31,9 @@ namespace API_Champions_Manager
         {
 
             services.AddControllers();
+
+            var connection = Configuration["MySQLConnection:MySQLConnectionString"];
+            services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
 
             // Dependency Injection
             services.AddScoped<IAwardService, AwardServiceImplementation>();

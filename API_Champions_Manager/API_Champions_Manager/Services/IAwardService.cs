@@ -1,13 +1,13 @@
 ﻿using API_Champions_Manager.Model;
 using System.Collections.Generic;
 
-namespace API_Champions_Manager.Services.Implementations
+namespace API_Champions_Manager.Services
 {
     public interface IAwardService
     {
         Award Create(Award award);
         Award Update(Award award);
-        void Delete(Award award);
+        void Delete(long id);
         List<Award> FindAll();
         Award FindById(long id);
     }
