@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API_Champions_Manager.Services.Implementations
+namespace API_Champions_Manager.Repository.Implementations
 {
-    public class AwardServiceImplementation : IAwardService
+    public class AwardRepositoryImplementation : IAwardRepository
     {
         private MySQLContext _context;
-        public AwardServiceImplementation(MySQLContext context)
+        public AwardRepositoryImplementation(MySQLContext context)
         {
             _context = context;
         }
@@ -79,6 +79,11 @@ namespace API_Champions_Manager.Services.Implementations
             return award;
         }
         private bool Exists(long id)
+        {
+            return _context.Awards.Any(p => p.Id.Equals(id));
+        }
+
+        bool IAwardRepository.Exists(long id)
         {
             return _context.Awards.Any(p => p.Id.Equals(id));
         }

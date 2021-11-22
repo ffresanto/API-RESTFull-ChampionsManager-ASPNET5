@@ -1,32 +1,28 @@
-﻿using API_Champions_Manager.Model;
-using API_Champions_Manager.Services;
-using API_Champions_Manager.Services.Implementations;
+﻿using API_Champions_Manager.Business;
+using API_Champions_Manager.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace API_Champions_Manager.Controllers
+namespace API_Champions_Manager.Controllers.V1
 {
+    [ApiVersion("1")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/v{version:apiVersion}")]
     public class AwardController : ControllerBase
     {
         private readonly ILogger<AwardController> _logger;
-        private IAwardService _awardService;
+        private IAwardBusiness _awardBusiness;
 
-        public AwardController(ILogger<AwardController> logger, IAwardService awardService)
+        public AwardController(ILogger<AwardController> logger, IAwardBusiness awardBusiness)
         {
             _logger = logger;
-            _awardService = awardService;
+            _awardBusiness = awardBusiness;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_awardService.FindAll());
+            return Ok(_awardBusiness.FindAll());
         }
 
         // Maps GET requests to https://localhost:{port}/api/person/{id}
@@ -35,7 +31,7 @@ namespace API_Champions_Manager.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var person = _awardService.FindById(id);
+            var person = _awardBusiness.FindById(id);
             if (person == null) return NotFound();
             return Ok(person);
         }
@@ -46,7 +42,7 @@ namespace API_Champions_Manager.Controllers
         public IActionResult Post([FromBody] Award award)
         {
             if (award == null) return BadRequest();
-            return Ok(_awardService.Create(award));
+            return Ok(_awardBusiness.Create(award));
         }
 
         // Maps PUT requests to https://localhost:{port}/api/person/
@@ -55,7 +51,7 @@ namespace API_Champions_Manager.Controllers
         public IActionResult Put([FromBody] Award award)
         {
             if (award == null) return BadRequest();
-            return Ok(_awardService.Update(award));
+            return Ok(_awardBusiness.Update(award));
         }
 
         // Maps DELETE requests to https://localhost:{port}/api/person/{id}
@@ -63,7 +59,7 @@ namespace API_Champions_Manager.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            _awardService.Delete(id);
+            _awardBusiness.Delete(id);
             return NoContent();
         }
     }
