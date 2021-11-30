@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using API_Champions_Manager.Model.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_Champions_Manager.Model
 {
     [Table("tb_award")]
-    public class Award
+    public class Award : BaseEntity
     {
-        [Column("id")]
-        public long Id { get; set; }
         [Column("name")]
         public string Name { get; set; }
         [Column("origin")]

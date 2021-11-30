@@ -1,5 +1,6 @@
 ﻿using API_Champions_Manager.Model;
 using API_Champions_Manager.Repository;
+using API_Champions_Manager.Repository.Generic;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,9 +8,9 @@ namespace API_Champions_Manager.Business.Implementations
 {
     public class AwardSBusinessImplementation : IAwardBusiness
     {
-        private readonly IAwardRepository _repository;
+        private readonly IRepository<Award> _repository;
 
-        public AwardSBusinessImplementation(IAwardRepository repository)
+        public AwardSBusinessImplementation(IRepository<Award> repository)
         {
             _repository = repository;
         }

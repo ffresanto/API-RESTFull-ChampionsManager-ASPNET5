@@ -59,7 +59,7 @@ namespace API_Champions_Manager.Repository.Implementations
         {
             // We check if the person exists in the database
             // If it doesn't exist we return an empty person instance
-            if (!Exists(award.Id)) return new Award();
+            if (!Exists(award.Id)) return null;
 
             // Get the current status of the record in the database
             var result = _context.Awards.SingleOrDefault(p => p.Id.Equals(award.Id));
