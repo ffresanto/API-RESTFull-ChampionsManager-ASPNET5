@@ -1,5 +1,7 @@
 using API_Champions_Manager.Business;
 using API_Champions_Manager.Business.Implementations;
+using API_Champions_Manager.HyperMedia.Enricher;
+using API_Champions_Manager.HyperMedia.Filters;
 using API_Champions_Manager.Model.Context;
 using API_Champions_Manager.Repository;
 using API_Champions_Manager.Repository.Generic;
@@ -10,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -44,11 +47,26 @@ namespace API_Champions_Manager
                 MigrateDatabase(connection);
             }
 
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+            })
+          .AddXmlSerializerFormatters();
+
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new AwardEnricher());
+
+            services.AddSingleton(filterOptions);
+
+
             //Versioning API
             services.AddApiVersioning();
 
             //Dependency Injection
-            services.AddScoped<IAwardBusiness, AwardSBusinessImplementation>();
+            services.AddScoped<IAwardBusiness, AwardBusinessImplementation>();
             services.AddScoped<IAwardRepository, AwardRepositoryImplementation>();
 
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
@@ -72,6 +90,7 @@ namespace API_Champions_Manager
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
 

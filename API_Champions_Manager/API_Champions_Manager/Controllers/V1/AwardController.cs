@@ -1,4 +1,6 @@
 ﻿using API_Champions_Manager.Business;
+using API_Champions_Manager.Data.VO;
+using API_Champions_Manager.HyperMedia.Filters;
 using API_Champions_Manager.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,6 +22,7 @@ namespace API_Champions_Manager.Controllers.V1
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_awardBusiness.FindAll());
@@ -29,6 +32,7 @@ namespace API_Champions_Manager.Controllers.V1
         // receiving an ID as in the Request Path
         // Get with parameters for FindById -> Search by ID
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
             var person = _awardBusiness.FindById(id);
@@ -39,7 +43,8 @@ namespace API_Champions_Manager.Controllers.V1
         // Maps POST requests to https://localhost:{port}/api/person/
         // [FromBody] consumes the JSON object sent in the request body
         [HttpPost]
-        public IActionResult Post([FromBody] Award award)
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Post([FromBody] AwardVO award)
         {
             if (award == null) return BadRequest();
             return Ok(_awardBusiness.Create(award));
@@ -48,7 +53,8 @@ namespace API_Champions_Manager.Controllers.V1
         // Maps PUT requests to https://localhost:{port}/api/person/
         // [FromBody] consumes the JSON object sent in the request body
         [HttpPut]
-        public IActionResult Put([FromBody] Award award)
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Put([FromBody] AwardVO award)
         {
             if (award == null) return BadRequest();
             return Ok(_awardBusiness.Update(award));
