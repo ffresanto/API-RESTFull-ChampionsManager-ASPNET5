@@ -8,11 +8,13 @@ using API_Champions_Manager.Repository.Generic;
 using API_Champions_Manager.Repository.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -36,6 +38,12 @@ namespace API_Champions_Manager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
 
             services.AddControllers();
 
@@ -65,6 +73,22 @@ namespace API_Champions_Manager
             //Versioning API
             services.AddApiVersioning();
 
+            //Swagger
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "Champions Manager API",
+                        Version = "v1",
+                        Description = "Achievement Management for Football Games",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Franccesco Felipe Rodrigues",
+                            Url = new Uri("https://github.com/ffresanto")
+                        }
+                    });
+            });
+
             //Dependency Injection
             services.AddScoped<IAwardBusiness, AwardBusinessImplementation>();
             services.AddScoped<IAwardRepository, AwardRepositoryImplementation>();
@@ -84,6 +108,19 @@ namespace API_Champions_Manager
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json",
+                    "Champions Manager API - Achievement Management for Football Games - v1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
 
             app.UseAuthorization();
 

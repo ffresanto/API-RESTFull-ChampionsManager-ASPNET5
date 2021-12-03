@@ -4,6 +4,7 @@ using API_Champions_Manager.HyperMedia.Filters;
 using API_Champions_Manager.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace API_Champions_Manager.Controllers.V1
 {
@@ -22,6 +23,10 @@ namespace API_Champions_Manager.Controllers.V1
         }
 
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<AwardVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
@@ -32,6 +37,10 @@ namespace API_Champions_Manager.Controllers.V1
         // receiving an ID as in the Request Path
         // Get with parameters for FindById -> Search by ID
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(AwardVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
@@ -43,6 +52,9 @@ namespace API_Champions_Manager.Controllers.V1
         // Maps POST requests to https://localhost:{port}/api/person/
         // [FromBody] consumes the JSON object sent in the request body
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(AwardVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] AwardVO award)
         {
@@ -53,6 +65,9 @@ namespace API_Champions_Manager.Controllers.V1
         // Maps PUT requests to https://localhost:{port}/api/person/
         // [FromBody] consumes the JSON object sent in the request body
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(AwardVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] AwardVO award)
         {
@@ -63,6 +78,9 @@ namespace API_Champions_Manager.Controllers.V1
         // Maps DELETE requests to https://localhost:{port}/api/person/{id}
         // receiving an ID as in the Request Path
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
             _awardBusiness.Delete(id);
