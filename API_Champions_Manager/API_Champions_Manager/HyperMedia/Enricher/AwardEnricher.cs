@@ -14,7 +14,7 @@ namespace API_Champions_Manager.HyperMedia.Enricher
         private readonly object _lock = new object();
         protected override Task EnrichModel(AwardVO content, IUrlHelper urlHelper)
         {
-            var path = "api/person/v1";
+            var path = "api/award/v1";
             string link = GetLink(content.Id, urlHelper, path);
 
             content.Links.Add(new HyperMediaLink()

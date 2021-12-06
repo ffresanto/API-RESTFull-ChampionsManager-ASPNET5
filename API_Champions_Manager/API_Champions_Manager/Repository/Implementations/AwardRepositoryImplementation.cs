@@ -57,8 +57,8 @@ namespace API_Champions_Manager.Repository.Implementations
 
         public Award Update(Award award)
         {
-            // We check if the person exists in the database
-            // If it doesn't exist we return an empty person instance
+            // We check if the award exists in the database
+            // If it doesn't exist we return an empty award instance
             if (!Exists(award.Id)) return null;
 
             // Get the current status of the record in the database

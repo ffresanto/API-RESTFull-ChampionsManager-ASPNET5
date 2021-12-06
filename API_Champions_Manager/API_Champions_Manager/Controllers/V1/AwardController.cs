@@ -33,7 +33,7 @@ namespace API_Champions_Manager.Controllers.V1
             return Ok(_awardBusiness.FindAll());
         }
 
-        // Maps GET requests to https://localhost:{port}/api/person/{id}
+        // Maps GET requests to https://localhost:{port}/api/award/{id}
         // receiving an ID as in the Request Path
         // Get with parameters for FindById -> Search by ID
         [HttpGet("{id}")]
@@ -44,12 +44,12 @@ namespace API_Champions_Manager.Controllers.V1
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
-            var person = _awardBusiness.FindById(id);
-            if (person == null) return NotFound();
-            return Ok(person);
+            var award = _awardBusiness.FindById(id);
+            if (award == null) return NotFound();
+            return Ok(award);
         }
 
-        // Maps POST requests to https://localhost:{port}/api/person/
+        // Maps POST requests to https://localhost:{port}/api/award/
         // [FromBody] consumes the JSON object sent in the request body
         [HttpPost]
         [ProducesResponseType((200), Type = typeof(AwardVO))]
@@ -62,7 +62,7 @@ namespace API_Champions_Manager.Controllers.V1
             return Ok(_awardBusiness.Create(award));
         }
 
-        // Maps PUT requests to https://localhost:{port}/api/person/
+        // Maps PUT requests to https://localhost:{port}/api/award/
         // [FromBody] consumes the JSON object sent in the request body
         [HttpPut]
         [ProducesResponseType((200), Type = typeof(AwardVO))]
@@ -75,7 +75,7 @@ namespace API_Champions_Manager.Controllers.V1
             return Ok(_awardBusiness.Update(award));
         }
 
-        // Maps DELETE requests to https://localhost:{port}/api/person/{id}
+        // Maps DELETE requests to https://localhost:{port}/api/award/{id}
         // receiving an ID as in the Request Path
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
