@@ -8,7 +8,7 @@ Estou desenvolvendo esse projeto em minhas horas vagas e com o tempo atualizando
 
 ## :computer: Recursos Utilizados: 
 
-Se faz necessário realizar a instalação das aplicações/frameworks abaixo:
+Necessário realizar a instalação das aplicações/frameworks abaixo:
 
 * Visual Studio 2019
 
