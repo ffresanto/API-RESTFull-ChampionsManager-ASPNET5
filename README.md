@@ -29,7 +29,7 @@ Necessário realizar a instalação das aplicações/frameworks abaixo:
 - Serilog (2.10.0)
 - Serilog.AspNetCore (3.4.0)
 - Serilog.Sinks.Console (3.1.1)
-- Swashbuckle.AspNetCore (5.6.1)
+- Swashbuckle.AspNetCore (5.6.1) 
     
 ## :fire: Configurando o Projeto Localmente 
 
